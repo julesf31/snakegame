@@ -24,12 +24,13 @@ ypos = 1
 xpos = 1
 board[ypos][xpos] = "x"
 
-def new_fruit_pos(board, lenth):
+def new_fruit_pos(board):
   if ypos == 0:
     return 
   elif ypos == 9:
     return
-  elif board[ypos][xpos] == '0':
+  global lenth
+  if board[ypos][xpos] == '0':
     fruitypos = random.randint(1, 7)
     fruitxpos = random.randint(1, 7)
     if board[fruitypos][fruitxpos] == 'x':
@@ -39,9 +40,16 @@ def new_fruit_pos(board, lenth):
     lenth += 1
   return lenth
 
-#def draw_lenth(lenth):
-#  for i in range(lenth):
-    
+def draw_lenth(board, snake, xpos, ypos):
+  #snake.append(str(ypos) + ' ' + str(xpos))
+  print(snake)
+  for i in snake:
+    throwaway = i.split(' ')
+    ypos, xpos = throwaway[0], throwaway[1]
+    board[int(ypos)][int(xpos)] = 'x'
+  del snake[-1]
+  for i in board:
+    print(*i)
 
 fruitypos = random.randint(1, 7)
 fruitxpos = random.randint(1, 7)
@@ -65,43 +73,57 @@ def check_for_collision(ypos, xpos, board):
 print_board(board)
 lenth = 1
 l = 0
+snake = []
 while 1:
   move = input('Enter direction (wasd): ')
   if move == 'w':
+    print('')
     board[ypos][xpos] = ' '
     ypos -= 1
     check_for_collision(ypos, xpos, board)
     if l == 1:
       break
-    new_fruit_pos(board, lenth)
+    new_fruit_pos(board)
     board[ypos][xpos] = 'x'
     print_board(board)
+    print('Lenth = ' + str(lenth))
+  #-----------------------------------------------
   elif move == 's':
+    print('')
     board[ypos][xpos] = ' '
+    snake.append(str(ypos) + ' ' + str(xpos))
     ypos += 1
     check_for_collision(ypos, xpos, board)
     if l == 1:
       break
-    new_fruit_pos(board, lenth)
+    new_fruit_pos(board)
     board[ypos][xpos] = 'x'
-    print_board(board)
+    draw_lenth(board, snake, xpos, ypos)
+    #print_board(board) - likely doesn't need to be here
+    print('Lenth = ' + str(lenth))
+  #-----------------------------------------------
   elif move == 'a':
+    print('')
     board[ypos][xpos] = ' '
     xpos -= 1
     check_for_collision(ypos, xpos, board)
     if l == 1:
       break
-    new_fruit_pos(board, lenth)
+    new_fruit_pos(board)
     board[ypos][xpos] = 'x'
     print_board(board)
+    print('Lenth = ' + str(lenth))
+  #-----------------------------------------------
   elif move == 'd':
+    print('')
     board[ypos][xpos] = ' '
     xpos += 1
     check_for_collision(ypos, xpos, board)
     if l == 1:
       break
-    new_fruit_pos(board, lenth)
+    new_fruit_pos(board)
     board[ypos][xpos] = 'x'
     print_board(board)
+    print('Lenth = ' + str(lenth))
 
 print('bad')
