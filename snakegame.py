@@ -16,7 +16,93 @@ for i in range(8):
   board.append(row)
 board.append(boardtop)
 
-def print_board(board):
+fyp = random.randint(1, 7)
+fxp = random.randint(1, 7)
+board[fyp][fxp] = '0'
+
+snake = [[1, 1]]
+for i in snake:
+  syp = i[0]
+  sxp = i[1]
+  board[syp][sxp] = 'x'
+
+for k in board:
+  print(*k)
+
+def movement(move):
+  global snake
+  global direction
+  global board
+
+  for i in snake:
+    syp = i[0]
+    sxp = i[1]
+    board[syp][sxp] = ' '
+
+  if move == 'w':
+    if direction == 'down':
+      return
+    for i in snake:
+      i[0] -= 1
+    direction == 'up'
+
+  if move == 's':
+    if direction == 'up':
+      return
+    for i in snake:
+      i[0] += 1
+    direction == 'down'
+
+  if move == 'a':
+    if direction == 'right':
+      return
+    for i in snake:
+      i[1] -= 1
+    direction == 'left'
+
+  if move == 'd':
+    if direction == 'left':
+      return
+    for i in snake:
+      i[1] += 1
+    direction == 'right'
+
+  for i in snake:
+    syp = i[0]
+    sxp = i[1]
+    board[syp][sxp] = 'x'
+  for k in board:
+    print(*k)
+
+
+direction = 'down'
+while True:
+  move = input('Enter Direction: ')
+  movement(move)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''def print_board(board):
   for i in board:
     print(*i)
 
@@ -126,4 +212,4 @@ while 1:
     print_board(board)
     print('Lenth = ' + str(lenth))
 
-print('bad')
+print('bad')'''
